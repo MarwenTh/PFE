@@ -9,6 +9,13 @@ const User = new Schema(
     },
     user_email: {
       type: String,
+      unique: true,
+      validate: {
+        validator: function (value) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        },
+        message: "Invalid email address",
+      },
     },
     user_password: {
       type: String,
@@ -18,6 +25,7 @@ const User = new Schema(
     },
     user_status: {
       type: String,
+      default: "active",
     },
     user_created: {
       type: Date,

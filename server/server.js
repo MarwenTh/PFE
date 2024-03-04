@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
+require("dotenv").config();
 
 const userRoute = require("./routes/userRoute");
 const projectRoute = require("./routes/projectRoute");
@@ -9,7 +10,7 @@ const projectRoute = require("./routes/projectRoute");
 app.use(cors());
 app.use(express.json());
 
-const mongoURL = "mongodb://0.0.0.0:27017/pfeProject";
+const mongoURL = process.env.MONGO_DB_URL;
 
 mongoose.connect(mongoURL);
 const connection = mongoose.connection;
@@ -23,7 +24,7 @@ connection.once("open", () => {
 app.use("/api/users", userRoute);
 app.use("/api/projects", projectRoute);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
